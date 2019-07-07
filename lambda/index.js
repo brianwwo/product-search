@@ -8,12 +8,9 @@ exports.handler = async (event) => {
                 resolve([]);
             } else {
                 const key = event.queryStringParameters.key;
-                docClient.scan({
-                    TableName: 'Products',
-                    FilterExpression: 'contains( #val, :v )',
-                    ExpressionAttributeNames: {
-                        '#val': 'value'
-                    },
+                docClient.query({
+                    TableName: 'ProductCatelog',
+                    KeyConditionExpression: 'Category = :v',
                     ExpressionAttributeValues: {
                         ':v': key
                     }
