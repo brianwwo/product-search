@@ -8,7 +8,7 @@
 ![架构图](./diagrams/arch.png)
 1. 用户通过浏览器访问静态web资源
 2. js调用ajax访问动态资源
-   - API Gateway通过反向代理把请求提交到Lambda，并向用户提供api借口
+   - API Gateway通过代理集成把请求提交到Lambda，并向用户提供api借口
    - Lambda通过从上游传输过来的请求数据调用DynamoDB拿到结果并返回给上游
 
 #### 可改进空间
