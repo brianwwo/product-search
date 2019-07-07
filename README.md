@@ -13,9 +13,8 @@
 
 #### 可改进空间
 1. 可在S3上游搭建Cloud Front以作为CDN对静态资源作为缓存，提高非本程序Region的可访问性，减少延迟。
-2. 可在Lambda Function层添加错误处理。发送消息到相关人员或者集成相关错误处理系统。
-3. 此demo采用Dynamodb的scan特性对表中所有项目进行匹配，在数据量非常大的时候查询会非常耗时。可在增加Dynamodb DAX缓存层，以减少用户对数据库的直接访问。<br>
-或者在设计表时把产品分类存储以避免把所有的主数据放在一张表里。<br>
+2. 可在Lambda Function层添加错误处理，当重试次数达到预设值后发送消息到相关人员或者集成相关错误处理系统。
+3. 可在增加Dynamodb DAX缓存层，以减少用户对数据库的直接访问。
 4. 增加域名并开启https (Route 53)。
 5. 可按照需求增加是否需要用户验证，AWS Cognito。
 6. 利用AWS Codedeploy自动部署静态资源和Lambda Function。
@@ -23,9 +22,9 @@
 # 操作步骤
 1. 搭建DynamoDB
    1. ![DynamoDB](./diagrams/dynamodb.png)
-   创建Products表{ID (分区键), value (二级索引)}
+   创建ProductCatelog表{Category (分区键), Information (排序键)}
 2. 搭建Lamda Function
-   1. 新建Lamda访问角色，选择AWSLambdaBasicExecutionRole为托管策略，选择Scan作为内联策略。
+   1. 新建Lamda访问角色，选择AWSLambdaBasicExecutionRole为托管策略，选择Query作为内联策略。
    ![Role](./diagrams/role.png)
    2. 新建Lamda Function，选择上述角色，待Function写完之后保存并发布。
 3. API Gateway
@@ -36,11 +35,12 @@
    4. 测试API Gateway是否可访问
    ![Test APIGateway](./diagrams/testag.png)
 4. S3
-   1. 新建S3 bucket,不够选阻止公共访问
+   1. 新建S3 bucket,不勾选阻止公共访问
    ![S3 Create](./diagrams/s3new.png)
    2. 利用策略生成器生成所有公共访问允许的策略并粘贴进存储桶策略
    ![S3 Create](./diagrams/s3policy.png)
    3. 上传静态web文件到存储桶
    4. 打开静态托管
    ![S3 Create](./diagrams/s3web.png)
+5. 测试
 
