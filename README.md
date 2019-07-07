@@ -23,6 +23,8 @@
 1. 搭建DynamoDB
    1. ![DynamoDB](./diagrams/dynamodb.png)
    创建ProductCatelog表{Category (分区键), Information (排序键)}
+   2. 插入数据
+   ![DynamoDBData](./diagrams/dynamodbdata.png)
 2. 搭建Lamda Function
    1. 新建Lamda访问角色，选择AWSLambdaBasicExecutionRole为托管策略，选择Query作为内联策略。
    ![Role](./diagrams/role.png)
